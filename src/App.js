@@ -6,27 +6,54 @@ export default function App() {
 }
 
 function TipCalculator() {
-  const [billValue, setBillValue] = useState();
+  const [billValue, setBillValue] = useState(0);
+  const [percentageSerice, setPercentageSerice] = useState(0);
+  const [percentageFriendSerivce, setPercentageFriendSerivce] = useState(0);
+  // console.log("percentageSerice", percentageSerice);
+  // console.log("percentageFriendSerivce", percentageFriendSerivce);
+  // console.log("billValue", billValue);
+  // console.log(
+  //   "after calc service tip half without my friend",
+  //   billValue + (billValue * (percentageSerice / 100)) / 2
+  // );
+
   return (
     <>
       <h1> Tip Calculator </h1>
-      <BillInput />
-      <SelectPercentage>How did you like the service?</SelectPercentage>
-      <SelectPercentage>How did your friend like the service?</SelectPercentage>
+      <BillInput billValue={billValue} onSetBillValue={setBillValue} />
+      <SelectPercentage
+        percentage={percentageSerice}
+        onSelect={setPercentageSerice}
+      >
+        How did you like the service?
+      </SelectPercentage>
+      <SelectPercentage
+        percentage={percentageFriendSerivce}
+        onSelect={setPercentageFriendSerivce}
+      >
+        How did your friend like the service?
+      </SelectPercentage>
     </>
   );
 }
 
-function BillInput() {
+function BillInput({ billValue, onSetBillValue }) {
   return (
     <div>
       <label style={{ marginRight: "8px" }}>How much was the bill?</label>
-      <input type="text" placeholder="bill value" />
+      <input
+        type="text"
+        placeholder="bill value"
+        value={billValue}
+        onChange={(e) => {
+          onSetBillValue(Number(e.target.value));
+        }}
+      />
     </div>
   );
 }
 
-function SelectPercentage({ children, percentage }) {
+function SelectPercentage({ children, percentage, onSelect }) {
   return (
     <div>
       <label style={{ marginRight: "8px" }}>{children}</label>
@@ -41,4 +68,8 @@ function SelectPercentage({ children, percentage }) {
       </select>
     </div>
   );
+}
+
+function Output({ billValue, percentageSerice, percentageFriendSerivce }) {
+  return;
 }
