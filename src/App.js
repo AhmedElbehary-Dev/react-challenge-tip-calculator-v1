@@ -6,17 +6,14 @@ export default function App() {
 }
 
 function TipCalculator() {
-  const [billValue, setBillValue] = useState(0);
+  const [billValue, setBillValue] = useState("");
   const [percentageSerice, setPercentageSerice] = useState(0);
   const [percentageFriendSerivce, setPercentageFriendSerivce] = useState(0);
-  // console.log("percentageSerice", percentageSerice);
-  // console.log("percentageFriendSerivce", percentageFriendSerivce);
-  // console.log("billValue", billValue);
-  // console.log(
-  //   "after calc service tip half without my friend",
-  //   billValue + (billValue * (percentageSerice / 100)) / 2
-  // );
-
+  function handleReset() {
+    setBillValue("");
+    setPercentageSerice(0);
+    setPercentageFriendSerivce(0);
+  }
   return (
     <>
       <h1> Tip Calculator </h1>
@@ -33,6 +30,13 @@ function TipCalculator() {
       >
         How did your friend like the service?
       </SelectPercentage>
+
+      <Output
+        billValue={billValue}
+        percentageSerice={percentageSerice}
+        percentageFriendSerivce={percentageFriendSerivce}
+      />
+      <Reset handleReset={handleReset} />
     </>
   );
 }
@@ -71,5 +75,19 @@ function SelectPercentage({ children, percentage, onSelect }) {
 }
 
 function Output({ billValue, percentageSerice, percentageFriendSerivce }) {
-  return;
+  const sericeValue = percentageSerice / 2;
+  const friendSerivceValue = percentageFriendSerivce / 2;
+  const totalTip =
+    billValue +
+    billValue * (sericeValue / 100) +
+    billValue * (friendSerivceValue / 100);
+  return (
+    <p style={{ fontWeight: "bold" }}>
+      YOU PAY ${totalTip} (${billValue} + ${sericeValue + friendSerivceValue})
+    </p>
+  );
+}
+
+function Reset({ handleReset }) {
+  return <button onClick={handleReset}>Reset</button>;
 }
